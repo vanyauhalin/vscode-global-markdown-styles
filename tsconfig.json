@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "strict": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "resolveJsonModule": true,
+    "rootDir": ".",
+    "noEmit": true,
+    "outDir": "./dist",
+    "allowJs": true,
+    "checkJs": true,
+    "target": "ESNext",
+    "skipLibCheck": true
+  },
+  "include": [
+    "./src/*.ts",
+    "./test/*.ts",
+    "./makefile.ts"
+  ]
+}
