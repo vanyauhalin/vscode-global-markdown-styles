@@ -101,7 +101,7 @@
     }
   },
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
   "icon": "docs/icon.png",
   "preview": true
