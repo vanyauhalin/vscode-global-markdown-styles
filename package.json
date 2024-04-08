@@ -1,7 +1,7 @@
 {
   "name": "vscode-global-markdown-styles",
   "version": "0.0.1",
-  "description": "Apply global styles to Markdown preview in Visual Studio Code",
+  "description": "markdown.styles but globally",
   "keywords": [
     "extension",
     "markdown",
