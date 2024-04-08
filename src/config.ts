@@ -46,7 +46,7 @@ export function readConfig(w: typeof workspace): Config {
     c.validation.enabled = e
   }
 
-  // https://github.com/microsoft/vscode/blob/1.3.0/extensions/markdown/package.json/#L118
+  // https://github.com/microsoft/vscode/blob/1.22.0/extensions/markdown-language-features/package.json/#L171
   wc = w.getConfiguration("markdown")
 
   im = wc.get<string[]>("styles")

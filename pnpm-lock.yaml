@@ -20,8 +20,8 @@ devDependencies:
     specifier: ^7.5.8
     version: 7.5.8
   '@types/vscode':
-    specifier: ^1.87.0
-    version: 1.87.0
+    specifier: ^1.22.0
+    version: 1.88.0
   esbuild:
     specifier: ^0.20.2
     version: 0.20.2
@@ -464,8 +464,8 @@ packages:
     resolution: {integrity: sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==}
     dev: true
 
-  /@types/vscode@1.87.0:
-    resolution: {integrity: sha512-y3yYJV2esWr8LNjp3VNbSMWG7Y43jC8pCldG8YwiHGAQbsymkkMMt0aDT1xZIOFM2eFcNiUc+dJMx1+Z0UT8fg==}
+  /@types/vscode@1.88.0:
+    resolution: {integrity: sha512-rWY+Bs6j/f1lvr8jqZTyp5arRMfovdxolcqGi+//+cPDOh8SBvzXH90e7BiSXct5HJ9HGW6jATchbRTpTJpEkw==}
     dev: true
 
   /dequal@2.0.3:
