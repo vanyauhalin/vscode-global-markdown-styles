@@ -25,8 +25,7 @@
     "email": "vanyauhalin@gmail.com",
     "url": "https://github.com/vanyauhalin/"
   },
-  "type": "module",
-  "main": "./dist/extension.cjs",
+  "main": "./dist/extension.js",
   "scripts": {
     "build": "tsx ./makefile.ts build",
     "compile": "tsc",

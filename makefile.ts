@@ -54,7 +54,7 @@ function distDir(d: string): string {
 }
 
 function distFile(d: string): string {
-  return join(d, "extension.cjs")
+  return join(d, "extension.js")
 }
 
 function sourceDir(d: string): string {
