@@ -3,13 +3,9 @@
   "version": "0.0.1",
   "description": "markdown.styles but globally",
   "keywords": [
-    "extension",
     "markdown",
     "preview",
-    "styles",
-    "visual-studio-code",
-    "vscode",
-    "vscode-extension"
+    "styles"
   ],
   "homepage": "https://github.com/vanyauhalin/vscode-global-markdown-styles/",
   "bugs": {
