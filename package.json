@@ -78,12 +78,12 @@
         "global-markdown-styles.http.enabled": {
           "type": "boolean",
           "default": false,
-          "description": "Allow loading styles using HTTP URLs."
+          "markdownDescription": "The extension is set up to not allow file downloads via HTTP by default. This is a [security measure](https://www.cloudflare.com/learning/ssl/why-is-http-not-secure/). If possible, strongly recommend avoiding HTTP connections."
         },
         "global-markdown-styles.imports": {
           "type": "array",
           "default": [],
-          "description": "List of style URLs to import.",
+          "markdownDescription": "List of URLs for styles that need to be installed. Each item in the array should be an HTTP(S) URL without [redirection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections/), or an absolute [File URL](https://www.wikiwand.com/en/File_URI_scheme/). The order in which these URLs are listed is significant, as it mirrors the [`@import`](https://developer.mozilla.org/en-US/docs/Web/CSS/@import/) order in CSS.",
           "items": {
             "type": "string"
           }
@@ -91,7 +91,7 @@
         "global-markdown-styles.validation.enabled": {
           "type": "boolean",
           "default": true,
-          "description": "Enable validation of imported styles."
+          "markdownDescription": "Under the hood, the extension employs [Lightning CSS](https://github.com/parcel-bundler/lightningcss/) for validation. This setting is enabled by default."
         }
       }
     }
