@@ -1,5 +1,5 @@
 {
-  "name": "vscode-global-markdown-styles",
+  "name": "global-markdown-styles",
   "version": "0.0.1",
   "description": "markdown.styles but globally",
   "keywords": [
@@ -60,17 +60,17 @@
   "contributes": {
     "commands": [
       {
-        "command": "vscode-global-markdown-styles.install",
+        "command": "global-markdown-styles.install",
         "title": "Install Styles",
         "category": "Global Markdown Styles"
       },
       {
-        "command": "vscode-global-markdown-styles.uninstall",
+        "command": "global-markdown-styles.uninstall",
         "title": "Uninstall Styles",
         "category": "Global Markdown Styles"
       },
       {
-        "command": "vscode-global-markdown-styles.doctor",
+        "command": "global-markdown-styles.doctor",
         "title": "Diagnose Styles",
         "category": "Global Markdown Styles"
       }
@@ -79,12 +79,12 @@
       "type": "object",
       "title": "Global Markdown Styles",
       "properties": {
-        "vscode-global-markdown-styles.http.enabled": {
+        "global-markdown-styles.http.enabled": {
           "type": "boolean",
           "default": false,
           "description": "Allow loading styles using HTTP URLs."
         },
-        "vscode-global-markdown-styles.imports": {
+        "global-markdown-styles.imports": {
           "type": "array",
           "default": [],
           "description": "List of style URLs to import.",
@@ -92,7 +92,7 @@
             "type": "string"
           }
         },
-        "vscode-global-markdown-styles.validation.enabled": {
+        "global-markdown-styles.validation.enabled": {
           "type": "boolean",
           "default": true,
           "description": "Enable validation of imported styles."
