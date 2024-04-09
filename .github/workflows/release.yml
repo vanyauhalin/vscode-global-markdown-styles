@@ -33,6 +33,9 @@ jobs:
     - name: Build Extension
       run: pnpm build
 
+    - name: Package Extension
+      run: vsce package --no-dependencies --out ./dist
+
     - name: Release Extension on VSCode Marketplace
       env:
         VSCE_PAT: ${{secrets.VSCE_RELEASE_TOKEN}}
@@ -49,4 +52,4 @@ jobs:
       run: |
         v=$(jq --raw-output ".version" package.json)
         gh release create "v${v}" --generate-notes
-        gh release upload "v${v}" "./*.vsix"
+        gh release upload "v${v}" ./dist/*.vsix
