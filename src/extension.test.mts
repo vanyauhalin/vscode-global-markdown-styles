@@ -153,146 +153,6 @@ test("extensionID() returns the extension ID", () => {
 
 const {install} = extension
 
-test("install() installs the file URL styles", async () => {
-  const d = await createTempDir()
-
-  const uf = join(d, "user.css")
-  await writeFile(uf, "a {}")
-
-  const uu = pathToFileURL(uf)
-
-  const md = createExtension({extensionPath: d})
-
-  const rd = rootDir(md)
-  await mkdir(rd)
-
-  const btf = builtinFile(rd)
-  await writeFile(btf, "body {}")
-
-  const lib = createLibrary({
-    extensions: {
-      getExtension() {
-        return md
-      }
-    },
-    version: "1.22.0",
-    workspace: {
-      getConfiguration() {
-        return {
-          get(n: string) {
-            switch (n) {
-            case "imports":
-              return [uu.toString()]
-            default:
-              return
-            }
-          }
-        }
-      }
-    }
-  })
-
-  await install(lib)
-
-  const st = stateDir(rd)
-
-  const mf = metaFile(st)
-  const m = await readMeta(mf)
-  equal(m, {version})
-
-  const jl: string[] = []
-
-  const pd = importsDir(st)
-  const ph = createSHA(`/* ${uu} */\na {}`)
-  const pf = join(pd, `${ph}.css`)
-  const pc = await readFile(pf, "utf8")
-  is(pc, `/* ${uu} */\na {}`)
-  jl.push(pf)
-
-  const bpf = backupFile(st)
-  const bpc = await readFile(bpf, "utf8")
-  is(bpc, "body {}")
-  jl.unshift(bpf)
-
-  const jc = createInjection(jl, rd)
-  const btc = await readFile(btf, "utf8")
-  is(btc, jc)
-
-  await rf(d)
-})
-
-test("install() installs the http URL styles", async () => {
-  const d = await createTempDir()
-
-  const [s, u] = createServer()
-
-  s.on("request", (_, res) => {
-    res.end("a {}")
-  })
-
-  const md = createExtension({extensionPath: d})
-
-  const rd = rootDir(md)
-  await mkdir(rd)
-
-  const btf = builtinFile(rd)
-  await writeFile(btf, "body {}")
-
-  const lib = createLibrary({
-    extensions: {
-      getExtension() {
-        return md
-      }
-    },
-    version: "1.22.0",
-    workspace: {
-      getConfiguration() {
-        return {
-          get(n: string) {
-            switch (n) {
-            case "http.enabled":
-              return true
-            case "imports":
-              return [u]
-            default:
-              return
-            }
-          }
-        }
-      }
-    }
-  })
-
-  await install(lib)
-
-  const st = stateDir(rd)
-
-  const mf = metaFile(st)
-  const m = await readMeta(mf)
-  equal(m, {version})
-
-  const jl: string[] = []
-
-  const pd = importsDir(st)
-  const ph = createSHA(`/* ${u} */\na {}`)
-  const pf = join(pd, `${ph}.css`)
-  const pc = await readFile(pf, "utf8")
-  is(pc, `/* ${u} */\na {}`)
-  jl.push(pf)
-
-  const bpf = backupFile(st)
-  const bpc = await readFile(bpf, "utf8")
-  is(bpc, "body {}")
-  jl.unshift(bpf)
-
-  const jc = createInjection(jl, rd)
-  const btc = await readFile(btf, "utf8")
-  is(btc, jc)
-
-  s.close()
-  await rf(d)
-})
-
 test("install() throws if the configuration is invalid", async () => {
   const lib = createLibrary({
     version: "1.22.0",
@@ -671,6 +531,146 @@ test("install() throws if validation fails", async () => {
   await rf(d)
 })
 
+test("install() installs the file URL styles", async () => {
+  const d = await createTempDir()
+
+  const uf = join(d, "user.css")
+  await writeFile(uf, "a {}")
+
+  const uu = pathToFileURL(uf)
+
+  const md = createExtension({extensionPath: d})
+
+  const rd = rootDir(md)
+  await mkdir(rd)
+
+  const btf = builtinFile(rd)
+  await writeFile(btf, "body {}")
+
+  const lib = createLibrary({
+    extensions: {
+      getExtension() {
+        return md
+      }
+    },
+    version: "1.22.0",
+    workspace: {
+      getConfiguration() {
+        return {
+          get(n: string) {
+            switch (n) {
+            case "imports":
+              return [uu.toString()]
+            default:
+              return
+            }
+          }
+        }
+      }
+    }
+  })
+
+  await install(lib)
+
+  const st = stateDir(rd)
+
+  const mf = metaFile(st)
+  const m = await readMeta(mf)
+  equal(m, {version})
+
+  const jl: string[] = []
+
+  const pd = importsDir(st)
+  const ph = createSHA(`/* ${uu} */\na {}`)
+  const pf = join(pd, `${ph}.css`)
+  const pc = await readFile(pf, "utf8")
+  is(pc, `/* ${uu} */\na {}`)
+  jl.push(pf)
+
+  const bpf = backupFile(st)
+  const bpc = await readFile(bpf, "utf8")
+  is(bpc, "body {}")
+  jl.unshift(bpf)
+
+  const jc = createInjection(jl, rd)
+  const btc = await readFile(btf, "utf8")
+  is(btc, jc)
+
+  await rf(d)
+})
+
+test("install() installs the http URL styles", async () => {
+  const d = await createTempDir()
+
+  const [s, u] = createServer()
+
+  s.on("request", (_, res) => {
+    res.end("a {}")
+  })
+
+  const md = createExtension({extensionPath: d})
+
+  const rd = rootDir(md)
+  await mkdir(rd)
+
+  const btf = builtinFile(rd)
+  await writeFile(btf, "body {}")
+
+  const lib = createLibrary({
+    extensions: {
+      getExtension() {
+        return md
+      }
+    },
+    version: "1.22.0",
+    workspace: {
+      getConfiguration() {
+        return {
+          get(n: string) {
+            switch (n) {
+            case "http.enabled":
+              return true
+            case "imports":
+              return [u]
+            default:
+              return
+            }
+          }
+        }
+      }
+    }
+  })
+
+  await install(lib)
+
+  const st = stateDir(rd)
+
+  const mf = metaFile(st)
+  const m = await readMeta(mf)
+  equal(m, {version})
+
+  const jl: string[] = []
+
+  const pd = importsDir(st)
+  const ph = createSHA(`/* ${u} */\na {}`)
+  const pf = join(pd, `${ph}.css`)
+  const pc = await readFile(pf, "utf8")
+  is(pc, `/* ${u} */\na {}`)
+  jl.push(pf)
+
+  const bpf = backupFile(st)
+  const bpc = await readFile(bpf, "utf8")
+  is(bpc, "body {}")
+  jl.unshift(bpf)
+
+  const jc = createInjection(jl, rd)
+  const btc = await readFile(btf, "utf8")
+  is(btc, jc)
+
+  s.close()
+  await rf(d)
+})
+
 test("install() installs the styles without validation", async () => {
   const d = await createTempDir()
 
@@ -726,57 +726,6 @@ test("install() installs the styles without validation", async () => {
 })
 
 const {uninstall} = extension
-
-test("uninstall() removes the styles", async () => {
-  const d = await createTempDir()
-
-  const uf = join(d, "user.css")
-  await writeFile(uf, "a {}")
-
-  const uu = pathToFileURL(uf)
-
-  const md = createExtension({extensionPath: d})
-
-  const rd = rootDir(md)
-  await mkdir(rd)
-
-  const btf = builtinFile(rd)
-  await writeFile(btf, "body {}")
-
-  const lib = createLibrary({
-    extensions: {
-      getExtension() {
-        return md
-      }
-    },
-    version: "1.22.0",
-    workspace: {
-      getConfiguration() {
-        return {
-          get(n: string) {
-            switch (n) {
-            case "imports":
-              return [uu.toString()]
-            default:
-              return
-            }
-          }
-        }
-      }
-    }
-  })
-
-  await install(lib)
-  await uninstall(lib)
-
-  const st = stateDir(rd)
-  ok(!existsSync(st))
-
-  const btc = await readFile(btf, "utf8")
-  is(btc, "body {}")
-
-  await rf(d)
-})
 
 test("uninstall() throws if could not determine the markdown extension name", async () => {
   const lib = createLibrary({
@@ -878,8 +827,55 @@ test("uninstall() throws if could not find the markdown extension's state direct
   await rf(d)
 })
 
-const {doctor} = extension
+test("uninstall() removes the styles", async () => {
+  const d = await createTempDir()
 
-// todo
+  const uf = join(d, "user.css")
+  await writeFile(uf, "a {}")
+
+  const uu = pathToFileURL(uf)
+
+  const md = createExtension({extensionPath: d})
+
+  const rd = rootDir(md)
+  await mkdir(rd)
+
+  const btf = builtinFile(rd)
+  await writeFile(btf, "body {}")
+
+  const lib = createLibrary({
+    extensions: {
+      getExtension() {
+        return md
+      }
+    },
+    version: "1.22.0",
+    workspace: {
+      getConfiguration() {
+        return {
+          get(n: string) {
+            switch (n) {
+            case "imports":
+              return [uu.toString()]
+            default:
+              return
+            }
+          }
+        }
+      }
+    }
+  })
+
+  await install(lib)
+  await uninstall(lib)
+
+  const st = stateDir(rd)
+  ok(!existsSync(st))
+
+  const btc = await readFile(btf, "utf8")
+  is(btc, "body {}")
+
+  await rf(d)
+})
 
 test.run()
