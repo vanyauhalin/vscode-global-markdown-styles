@@ -899,4 +899,401 @@ test("uninstall() removes the styles", async () => {
   await rf(d)
 })
 
+const {doctor} = extension
+
+test("doctor() throws if could not determine the markdown extension name", async () => {
+  const lib = createLibrary({
+    version: "1.2.0"
+  })
+
+  try {
+    await doctor(lib)
+    unreachable()
+  } catch (e) {
+    let m = ""
+    if (e instanceof Error) {
+      m = e.message
+    }
+    instance(e, Error)
+    is(m, "Could not determine the markdown extension name")
+  }
+})
+
+test("doctor() throws if could not find the markdown extension", async () => {
+  const lib = createLibrary({
+    extensions: {
+      getExtension() {}
+    },
+    version: "1.22.0"
+  })
+
+  try {
+    await doctor(lib)
+    unreachable()
+  } catch (e) {
+    let m = ""
+    if (e instanceof Error) {
+      m = e.message
+    }
+    instance(e, Error)
+    is(m, "Could not find the markdown extension")
+  }
+})
+
+test("doctor() throws if could not find the markdown extension's styles directory", async () => {
+  const d = await createTempDir()
+
+  const md = createExtension({extensionPath: d})
+
+  const lib = createLibrary({
+    extensions: {
+      getExtension() {
+        return md
+      }
+    },
+    version: "1.22.0"
+  })
+
+  try {
+    await doctor(lib)
+    unreachable()
+  } catch (e) {
+    let m = ""
+    if (e instanceof Error) {
+      m = e.message
+    }
+    instance(e, Error)
+    is(m, "Could not find the markdown extension's styles directory")
+  }
+
+  await rf(d)
+})
+
+test("doctor() writes the meta object if it was missing", async () => {
+  const d = await createTempDir()
+
+  const md = createExtension({extensionPath: d})
+
+  const rd = rootDir(md)
+  await mkdir(rd)
+
+  const st = stateDir(rd)
+
+  const mf = metaFile(st)
+
+  const lib = createLibrary({
+    extensions: {
+      getExtension() {
+        return md
+      }
+    },
+    version: "1.22.0",
+    workspace: {
+      getConfiguration() {
+        return {
+          get() {}
+        }
+      }
+    }
+  })
+
+  await doctor(lib)
+
+  const m = await readMeta(mf)
+  equal(m, {version})
+
+  await rf(d)
+})
+
+test("doctor() overrides the meta if there was one", async () => {
+  const d = await createTempDir()
+
+  const md = createExtension({extensionPath: d})
+
+  const rd = rootDir(md)
+  await mkdir(rd)
+
+  const st = stateDir(rd)
+  await mkdir(st)
+
+  const mf = metaFile(st)
+  const m = {version: "x"}
+  await writeMeta(mf, m)
+
+  const lib = createLibrary({
+    extensions: {
+      getExtension() {
+        return md
+      }
+    },
+    version: "1.22.0",
+    workspace: {
+      getConfiguration() {
+        return {
+          get() {}
+        }
+      }
+    }
+  })
+
+  await doctor(lib)
+
+  const c = await readMeta(mf)
+  equal(c, {version})
+
+  await rf(d)
+})
+
+test("doctor() removes the import if it is corrupted", async () => {
+  const d = await createTempDir()
+
+  const md = createExtension({extensionPath: d})
+
+  const rd = rootDir(md)
+  await mkdir(rd)
+
+  const st = stateDir(rd)
+  await mkdir(st)
+
+  const pd = importsDir(st)
+  await mkdir(pd)
+
+  const pf = join(pd, "import.css")
+  await writeFile(pf, "a {}")
+
+  const lib = createLibrary({
+    extensions: {
+      getExtension() {
+        return md
+      }
+    },
+    version: "1.22.0",
+    workspace: {
+      getConfiguration() {
+        return {
+          get() {}
+        }
+      }
+    }
+  })
+
+  await doctor(lib)
+
+  ok(!existsSync(pd))
+
+  await rf(d)
+})
+
+test("doctor() removes the import if it is failed to validate", async () => {
+  const d = await createTempDir()
+
+  const md = createExtension({extensionPath: d})
+
+  const rd = rootDir(md)
+  await mkdir(rd)
+
+  const st = stateDir(rd)
+  await mkdir(st)
+
+  const pd = importsDir(st)
+  await mkdir(pd)
+
+  const ph = createSHA("a }")
+  const pf = join(pd, `${ph}.css`)
+  await writeFile(pf, "a }")
+
+  const lib = createLibrary({
+    extensions: {
+      getExtension() {
+        return md
+      }
+    },
+    version: "1.22.0",
+    workspace: {
+      getConfiguration() {
+        return {
+          get() {}
+        }
+      }
+    }
+  })
+
+  await doctor(lib)
+
+  ok(!existsSync(pd))
+
+  await rf(d)
+})
+
+test("doctor() keeps the import if it is ok", async () => {
+  const d = await createTempDir()
+
+  const md = createExtension({extensionPath: d})
+
+  const rd = rootDir(md)
+  await mkdir(rd)
+
+  const st = stateDir(rd)
+  await mkdir(st)
+
+  const pd = importsDir(st)
+  await mkdir(pd)
+
+  const ph = createSHA("a {}")
+  const pf = join(pd, `${ph}.css`)
+  await writeFile(pf, "a {}")
+
+  const lib = createLibrary({
+    extensions: {
+      getExtension() {
+        return md
+      }
+    },
+    version: "1.22.0",
+    workspace: {
+      getConfiguration() {
+        return {
+          get() {}
+        }
+      }
+    }
+  })
+
+  await doctor(lib)
+
+  ok(existsSync(pf))
+
+  await rf(d)
+})
+
+test("doctor() restores the backup if it was missing", async () => {
+  const d = await createTempDir()
+
+  const md = createExtension({extensionPath: d})
+
+  const rd = rootDir(md)
+  await mkdir(rd)
+
+  const st = stateDir(rd)
+  await mkdir(st)
+
+  const bpf = backupFile(st)
+
+  const lib = createLibrary({
+    extensions: {
+      getExtension() {
+        return md
+      }
+    },
+    version: "1.22.0",
+    workspace: {
+      getConfiguration() {
+        return {
+          get() {}
+        }
+      }
+    }
+  })
+
+  await doctor(lib)
+
+  const bpc = await readFile(bpf, "utf8")
+  match(bpc, "Copyright (c) Microsoft Corporation. All rights reserved.")
+
+  await rf(d)
+})
+
+test("doctor() restores the backup if it was corrupted", async () => {
+  const d = await createTempDir()
+
+  const md = createExtension({extensionPath: d})
+
+  const rd = rootDir(md)
+  await mkdir(rd)
+
+  const st = stateDir(rd)
+  await mkdir(st)
+
+  const bpf = backupFile(st)
+  await writeFile(bpf, "body {}")
+
+  const lib = createLibrary({
+    extensions: {
+      getExtension() {
+        return md
+      }
+    },
+    version: "1.22.0",
+    workspace: {
+      getConfiguration() {
+        return {
+          get() {}
+        }
+      }
+    }
+  })
+
+  await doctor(lib)
+
+  const bpc = await readFile(bpf, "utf8")
+  match(bpc, "Copyright (c) Microsoft Corporation. All rights reserved.")
+
+  await rf(d)
+})
+
+test("doctor() restores the builtin", async () => {
+  const d = await createTempDir()
+
+  const md = createExtension({extensionPath: d})
+
+  const rd = rootDir(md)
+  await mkdir(rd)
+
+  const st = stateDir(rd)
+  await mkdir(st)
+
+  const pd = importsDir(st)
+  await mkdir(pd)
+
+  const jl: string[] = []
+
+  let ph = createSHA("a }")
+  let pf = join(pd, `${ph}.css`)
+  await writeFile(pf, "a }")
+
+  ph = createSHA("a {}")
+  pf = join(pd, `${ph}.css`)
+  await writeFile(pf, "a {}")
+  jl.push(pf)
+
+  const bpf = backupFile(st)
+  jl.unshift(bpf)
+
+  const btf = builtinFile(rd)
+
+  const lib = createLibrary({
+    extensions: {
+      getExtension() {
+        return md
+      }
+    },
+    version: "1.22.0",
+    workspace: {
+      getConfiguration() {
+        return {
+          get() {}
+        }
+      }
+    }
+  })
+
+  await doctor(lib)
+
+  const jc = createInjection(jl, rd)
+  const btc = await readFile(btf, "utf8")
+  is(btc, jc)
+
+  await rf(d)
+})
+
 test.run()
