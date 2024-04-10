@@ -186,7 +186,8 @@ export async function doctor(lib: Library): Promise<void> {
   const pd = importsDir(st)
   if (existsSync(pd)) {
     const v = await createValidator()
-    const pl = await readdir(pd)
+
+    let pl = await readdir(pd)
     await Promise.all(pl.map(async (n) => {
       const f = join(pd, n)
       const c = await readFile(f, "utf8")
@@ -204,6 +205,11 @@ export async function doctor(lib: Library): Promise<void> {
         await rm(f)
       }
     }))
+
+    pl = await readdir(pd)
+    if (pl.length === 0) {
+      await rmdir(pd)
+    }
   }
 
   let btu = extensionURL(lib.version, n)
