@@ -91,7 +91,6 @@ The extension is available on the [VSCode Marketplace](https://marketplace.visua
 
   The extension supports the setting provided by VS Code. However,  remember that this setting has lower priority when compared to the extension's custom setting.
 
-
 ## Commands
 
 - `global-markdown-styles.install`
