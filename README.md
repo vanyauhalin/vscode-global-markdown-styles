@@ -111,7 +111,7 @@ Are welcome! See [How to Contribute to Open Source](https://opensource.guide/how
 
 ## Acknowledgments
 
-I would like to thank [Renzhi Li](https://github.com/be5invis/) for his [Custom CSS and JS](https://github.com/be5invis/vscode-custom-css) extension. It has been a source of inspiration and has led me to experiment.
+I would like to thank [Renzhi Li](https://github.com/be5invis/) for his [Custom CSS and JS](https://github.com/be5invis/vscode-custom-css/) extension. It has been a source of inspiration and has led me to experiment.
 
 ## License
 
