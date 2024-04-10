@@ -27,6 +27,7 @@ Since the extension enhances the default styles, it is compatible with all other
 The extension lacks a logger. Instead, it utilizes [notifications](https://code.visualstudio.com/api/ux-guidelines/notifications/) to relay information regarding the command status or errors. Therefore, it recommends enabling notifications before executing any command.
 
 > [!WARNING]
+>
 > To reiterate, this extension modifies the VS Code source code. Please use it responsibly and at your own risk. Strongly advise against installing styles from unverified sources.
 
 ## Requirements
