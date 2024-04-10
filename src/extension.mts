@@ -212,15 +212,7 @@ export async function doctor(lib: Library): Promise<void> {
     }
   }
 
-  let btu = sourceURL(lib.version, n)
-  btu = rootURL(btu)
-  btu = builtinURL(btu)
-  const btr = await fetch(btu)
-  if (!btr.ok) {
-    throw new Error()
-  }
-  const btc = await btr.text()
-
+  const btc = await readSource(lib.version, n)
   const bpf = backupFile(st)
   if (!existsSync(bpf)) {
     await writeFile(bpf, btc)
@@ -283,6 +275,17 @@ export async function readImport(u: string): Promise<string> {
   default:
     throw new Error(`Invalid import URL: ${u}`)
   }
+}
+
+export async function readSource(v: string, n: string): Promise<string> {
+  let u = sourceURL(v, n)
+  u = rootURL(u)
+  u = builtinURL(u)
+  const r = await fetch(u)
+  if (!r.ok) {
+    throw new Error(`Failed to fetch builtin styles: ${u} (${r.status} ${r.statusText})`)
+  }
+  return r.text()
 }
 
 export function createInjection(files: string[], root: string): string {

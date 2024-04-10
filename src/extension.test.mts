@@ -2,7 +2,7 @@ import {mkdir, readFile, writeFile} from "node:fs/promises"
 import {existsSync} from "node:fs"
 import {join} from "node:path"
 import {pathToFileURL} from "node:url"
-import {equal, instance, is, ok, unreachable} from "uvu/assert"
+import {equal, instance, is, match, ok, unreachable} from "uvu/assert"
 import {test} from "uvu"
 import {createExtension, createLibrary, createServer, createTempDir} from "../test/shared.mts"
 import {version} from "../package.json"
@@ -120,6 +120,27 @@ test("readImport() throws for unsupported URL", async () => {
     instance(e, Error)
     is(m, "Invalid import URL: ftp://localhost/")
   }
+})
+
+const {readSource} = extension
+
+test("readSource() throws if the server returns an error", async () => {
+  try {
+    await readSource("-", "-")
+    unreachable()
+  } catch (e) {
+    let m = ""
+    if (e instanceof Error) {
+      m = e.message
+    }
+    instance(e, Error)
+    is(m, "Failed to fetch builtin styles: https://raw.githubusercontent.com/microsoft/vscode/-/extensions/-/media/markdown.css (404 Not Found)")
+  }
+})
+
+test("readSource() reads the builtin styles", async () => {
+  const c = await readSource("1.22.0", "markdown-language-features")
+  match(c, "Copyright (c) Microsoft Corporation. All rights reserved.")
 })
 
 const {extensionName} = extension
