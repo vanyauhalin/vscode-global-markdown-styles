@@ -1,6 +1,6 @@
 import {join} from "node:path/posix"
 
-export function extensionURL(v: string, n: string): string {
+export function sourceURL(v: string, n: string): string {
   let p = join("microsoft/vscode", v, "extensions", n)
   if (!p.endsWith("/")) {
     p += "/"

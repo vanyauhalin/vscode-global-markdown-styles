@@ -2,10 +2,10 @@ import {is} from "uvu/assert"
 import {test} from "uvu"
 import * as baseurl from "./baseurl.mts"
 
-const {extensionURL} = baseurl
+const {sourceURL} = baseurl
 
-test("extensionURL() returns the extension URL", () => {
-  const a = extensionURL("1.0.0", "id")
+test("sourceURL() returns the source URL", () => {
+  const a = sourceURL("1.0.0", "id")
   is(a, "https://raw.githubusercontent.com/microsoft/vscode/1.0.0/extensions/id/")
 })
 

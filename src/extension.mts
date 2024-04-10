@@ -8,7 +8,7 @@ import {SemVer} from "semver"
 import type {extensions, workspace} from "vscode"
 import {version} from "../package.json"
 import {backupFile, builtinFile, importsDir, metaFile, rootDir, stateDir} from "./basedir.mts"
-import {builtinURL, extensionURL, isFileURL, isHTTPSURL, isHTTPURL, rootURL} from "./baseurl.mts"
+import {builtinURL, sourceURL, isFileURL, isHTTPSURL, isHTTPURL, rootURL} from "./baseurl.mts"
 import {readConfig, validateConfig} from "./config.mts"
 import {createMeta, writeMeta} from "./meta.mts"
 
@@ -212,7 +212,7 @@ export async function doctor(lib: Library): Promise<void> {
     }
   }
 
-  let btu = extensionURL(lib.version, n)
+  let btu = sourceURL(lib.version, n)
   btu = rootURL(btu)
   btu = builtinURL(btu)
   const btr = await fetch(btu)
