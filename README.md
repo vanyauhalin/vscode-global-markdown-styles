@@ -71,7 +71,7 @@ Just run the application as an administrator before executing the extension comm
 
 ## Installation
 
-The extension is available on the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=vanyauhalin.vscode-global-markdown-styles) and [Open VSX Registry](https://open-vsx.org/extension/vanyauhalin/vscode-global-markdown-styles/). Additionally, you can manually download it from the [GitHub Releases](https://github.com/vanyauhalin/vscode-global-markdown-styles/releases/).
+The extension is available on the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=vanyauhalin.global-markdown-styles) and [Open VSX Registry](https://open-vsx.org/extension/vanyauhalin/global-markdown-styles/). Additionally, you can manually download it from the [GitHub Releases](https://github.com/vanyauhalin/vscode-global-markdown-styles/releases/).
 
 ## Configuration
 
