@@ -21,11 +21,12 @@
     "email": "vanyauhalin@gmail.com",
     "url": "https://github.com/vanyauhalin/"
   },
+  "type": "commonjs",
   "main": "./dist/extension.js",
   "scripts": {
-    "build": "tsx ./makefile.ts build",
+    "build": "tsx ./makefile.mts build",
     "compile": "tsc",
-    "test": "tsx ./node_modules/uvu/bin.js"
+    "test": "tsx ./node_modules/uvu/bin.js ./src .test.mts$"
   },
   "dependencies": {
     "lightningcss-wasm": "^1.24.1",

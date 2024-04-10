@@ -1,7 +1,7 @@
 import type {Disposable, ExtensionContext} from "vscode"
 import {commands, extensions, version, window, workspace} from "vscode"
-import type {Library} from "./extension.ts"
-import * as extension from "./extension.ts"
+import type {Library} from "./extension.mts"
+import * as extension from "./extension.mts"
 import {name} from "../package.json"
 
 const lib: Library = {extensions, version, workspace}

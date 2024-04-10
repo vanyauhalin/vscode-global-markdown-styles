@@ -2,8 +2,8 @@ import {readFile, rm, rmdir, writeFile} from "node:fs/promises"
 import {join} from "node:path"
 import {equal, is} from "uvu/assert"
 import {test} from "uvu"
-import {createTempDir} from "../test/shared.ts"
-import * as meta from "./meta.ts"
+import {createTempDir} from "../test/shared.mts"
+import * as meta from "./meta.mts"
 
 const {createMeta} = meta
 

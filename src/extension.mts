@@ -7,10 +7,10 @@ import init, {transform} from "lightningcss-wasm"
 import {SemVer} from "semver"
 import type {extensions, workspace} from "vscode"
 import {version} from "../package.json"
-import {backupFile, builtinFile, importsDir, metaFile, rootDir, stateDir} from "./basedir.ts"
-import {builtinURL, extensionURL, isFileURL, isHTTPSURL, isHTTPURL, rootURL} from "./baseurl.ts"
-import {readConfig, validateConfig} from "./config.ts"
-import {createMeta, writeMeta} from "./meta.ts"
+import {backupFile, builtinFile, importsDir, metaFile, rootDir, stateDir} from "./basedir.mts"
+import {builtinURL, extensionURL, isFileURL, isHTTPSURL, isHTTPURL, rootURL} from "./baseurl.mts"
+import {readConfig, validateConfig} from "./config.mts"
+import {createMeta, writeMeta} from "./meta.mts"
 
 export interface Library {
   extensions: typeof extensions

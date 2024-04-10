@@ -1,6 +1,6 @@
 import {is} from "uvu/assert"
 import {test} from "uvu"
-import * as baseurl from "./baseurl.ts"
+import * as baseurl from "./baseurl.mts"
 
 const {extensionURL} = baseurl
 

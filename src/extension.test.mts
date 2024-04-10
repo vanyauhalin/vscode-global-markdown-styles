@@ -4,11 +4,11 @@ import {join} from "node:path"
 import {pathToFileURL} from "node:url"
 import {equal, instance, is, ok, unreachable} from "uvu/assert"
 import {test} from "uvu"
-import {createExtension, createLibrary, createServer, createTempDir} from "../test/shared.ts"
+import {createExtension, createLibrary, createServer, createTempDir} from "../test/shared.mts"
 import {version} from "../package.json"
-import {backupFile, builtinFile, importsDir, metaFile, rootDir, stateDir} from "./basedir.ts"
-import * as extension from "./extension.ts"
-import {readMeta, writeMeta} from "./meta.ts"
+import {backupFile, builtinFile, importsDir, metaFile, rootDir, stateDir} from "./basedir.mts"
+import * as extension from "./extension.mts"
+import {readMeta, writeMeta} from "./meta.mts"
 
 const {rf} = extension
 

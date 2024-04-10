@@ -2,7 +2,7 @@ import {isAbsolute} from "node:path"
 import {fileURLToPath} from "node:url"
 import type {workspace} from "vscode"
 import {name} from "../package.json"
-import {isFileURL, isHTTPSURL, isHTTPURL} from "./baseurl.ts"
+import {isFileURL, isHTTPSURL, isHTTPURL} from "./baseurl.mts"
 
 export interface Config {
   http: ConfigToggle

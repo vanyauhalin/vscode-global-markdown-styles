@@ -1,8 +1,8 @@
 import {is} from "uvu/assert"
 import {test} from "uvu"
-import {createExtension} from "../test/shared.ts"
+import {createExtension} from "../test/shared.mts"
 import {name} from "../package.json"
-import * as basedir from "./basedir.ts"
+import * as basedir from "./basedir.mts"
 
 const {rootDir} = basedir
 

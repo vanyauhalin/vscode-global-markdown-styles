@@ -1,8 +1,8 @@
 import {equal} from "uvu/assert"
 import {test} from "uvu"
-import {createLibrary, dar, win} from "../test/shared.ts"
+import {createLibrary, dar, win} from "../test/shared.mts"
 import {name} from "../package.json"
-import * as config from "./config.ts"
+import * as config from "./config.mts"
 
 const {createConfig} = config
 

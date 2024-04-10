@@ -10,7 +10,7 @@ import sade from "sade"
 main()
 
 function main(): void {
-  sade("./makefile.ts")
+  sade("./makefile.mts")
     .command("build")
     .action(build)
     .parse(argv)
@@ -62,7 +62,7 @@ function sourceDir(d: string): string {
 }
 
 function sourceFile(d: string): string {
-  return join(d, "main.ts")
+  return join(d, "main.mts")
 }
 
 function wasmDir(): string {

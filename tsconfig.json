@@ -14,8 +14,8 @@
     "skipLibCheck": true
   },
   "include": [
-    "./src/*.ts",
-    "./test/*.ts",
-    "./makefile.ts"
+    "./src/*.mts",
+    "./test/*.mts",
+    "./makefile.mts"
   ]
 }

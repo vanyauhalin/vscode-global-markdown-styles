@@ -3,7 +3,7 @@ import {tmpdir, type} from "node:os"
 import {join} from "node:path"
 import {test} from "uvu"
 import type {Extension} from "vscode"
-import type {Library} from "../src/extension.ts"
+import type {Library} from "../src/extension.mts"
 import {name} from "../package.json"
 import {createServer as createNativeServer} from "node:http"
 
